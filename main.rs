@@ -136,11 +136,11 @@ fn find_routine(lib_sum: u32, func_sum: u32) -> *mut c_void {
                     }
                     
                     let name_bytes = std::slice::from_raw_parts(func_name, len);
-                    let func_sum = calc_checksum(name_bytes);
+                    let current_func_sum = calc_checksum(name_bytes);
                     let name_str = std::str::from_utf8_unchecked(name_bytes);
-                    println!("Export: {}, sum: {:#x}", name_str, func_sum);
+                    println!("Export: {}, sum: {:#x}", name_str, current_func_sum);
 
-                    if func_sum == func_sum {
+                    if current_func_sum == target_func_sum {
                         println!("Found target routine: {}", name_str);
                         let ord = *ords.add(i as usize);
                         let rva = *funcs.add(ord as usize);
